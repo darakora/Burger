@@ -17,7 +17,7 @@ export const removeIngredient = (name) => {
 
 export const  setIngredients = (ingredients) => {
   return {
-      type: actionType.ADD_INGREDIENT,
+      type: actionType.SET_INGREDIENT,
       ingredients: ingredients
   };
 };
