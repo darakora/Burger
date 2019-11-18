@@ -111,7 +111,7 @@ class ContactData extends Component {
         this.props.onOrderBurger(order);
     };
 
-    checkValidity(value, rules) {
+    checkValidity = (value, rules) => {
         let isValid = true;
         if (!rules) {
             return true;
@@ -122,15 +122,25 @@ class ContactData extends Component {
         }
 
         if (rules.minLength) {
-            isValid = value.length >= rules.minLength && isValid;
+            isValid = value.length >= rules.minLength && isValid
         }
 
         if (rules.maxLength) {
-            isValid = value.length <= rules.maxLength && isValid;
+            isValid = value.length <= rules.maxLength && isValid
+        }
+
+        if (rules.isEmail) {
+            const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+            isValid = pattern.test(value) && isValid
+        }
+
+        if (rules.isNumeric) {
+            const pattern = /^\d+$/;
+            isValid = pattern.test(value) && isValid
         }
 
         return isValid;
-    }
+    };
 
     inputChangeHandler = (event, inputIdentifier) => {
         const updatedOrderForm ={
@@ -170,7 +180,7 @@ class ContactData extends Component {
                         elementConfig={formElement.config.elementConfig}
                         value={formElement.config.value}
                         invalid={!formElement.config.valid}
-                        shouldalidate={formElement.config.validation}
+                        shouldValidate={formElement.config.validation}
                         changed={(event) => this.inputChangeHandler(event, formElement.id)}
                         touched={formElement.config.touched}
                         />
